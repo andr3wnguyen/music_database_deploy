@@ -1,0 +1,11 @@
+<!-- GET /albums -->
+
+<html>
+  <head></head>
+  <body>
+    <h1>Albums</h1>
+    <% @albums.each do |album| %>
+        <p><a href='/albums/<%=album.id%>'><%= album.title %></a></p>
+    <%end%>
+  </body>
+</html>

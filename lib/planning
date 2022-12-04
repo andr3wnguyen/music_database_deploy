@@ -1,0 +1,133 @@
+# {{ post}} {{/sort-names}} Route Design Recipe
+
+_Copy this design recipe template to test-drive a Sinatra route._
+
+## 1. Design the Route Signature
+
+You'll need to include:
+  * the HTTP method
+  * the path
+  * any query parameters (passed in the URL)
+  * or body parameters (passed in the request body)
+
+post
+/sort-names
+names=Joe,Alice,Zoe,Julia,Kieran
+
+
+get
+/get-artists
+no params
+
+post 
+/artists #creates new artist
+name=Wild nothing && genre=Indie
+
+## 2. Design the Response
+
+The route might return different responses, depending on the result.
+
+For example, a route for a specific blog post (by its ID) might return `200 OK` if the post exists, but `404 Not Found` if the post is not found in the database.
+
+Your response might return plain text, JSON, or HTML code. 
+
+_Replace the below with your own design. Think of all the different possible responses your route will return._
+
+post /sort-names
+names=Joe,Alice,Zoe,Julia,Kieran
+returns Alice,Joe,Julia,Kieran,Zoe within the response
+
+
+get /get-artists
+returns list_of_artists
+
+post /artists
+post 
+name=Wild nothing && genre=Indie
+returns Wild nothing, Indie
+
+
+## 3. Write Examples
+
+_Replace these with your own design._
+
+```
+# Request:
+
+post /sort-names?names=Joe,Alice,Zoe,Julia,Kieran
+
+# Expected response:
+
+Response for 200 OK
+Response of sorted names => Alice,Joe,Julia,Kieran,Zoe 
+
+get /get-artists?
+expected response:
+Response for 200 OK
+Response of list of artists (Pixies, ABBA, Taylor Swift, Nina Simone)
+
+post /artists?name=Wild Nothing&genre=indie
+response for 200 OK
+
+Subsequent get/get-artists run
+Response for 200 ok
+Response return list of artists with wild nothing added Pixies, ABBA, Taylor Swift, Nina Simone, Wild Nothing
+
+## 4. Encode as Tests Examples
+
+```ruby
+# EXAMPLE
+# file: spec/integration/application_spec.rb
+
+require "spec_helper"
+
+describe Application do
+  include Rack::Test::Methods
+
+  let(:app) { Application.new }
+
+  context "POST /sort-names" do
+    it 'returns 200 OK' do
+      # Assuming the post with id 1 exists.
+      response = post('/sort-names')
+      expect(response.status).to eq(200)
+      # expect(response.body).to eq(expected_response)
+    end
+
+    it 'returns a sorted names list (as a string)' do
+      response = post('/sort-names?names=Callum,Barry,Alan)
+      expect(response.body).to eq('Alan,Barry,Callum')
+      # expect(response.body).to eq(expected_response)
+    end
+
+    context "get /get-artists" do
+    it "tests the /get-artists path" do
+    response = get('/get-artists')
+    expect(response.status).to eq 200
+    expect(response.body).to eq "Pixies, ABBA, Taylor Swift, Nina Simone"
+  end
+  end
+  
+  context "post /artists" do
+  it "adds an artist to the album" do
+    response = post('/artists?name=Wild nothing&genre=Indie)
+    expect(response.status).to eq 200
+    expect(response.body).to eq 'Pixies, ABBA, Taylor Swift, Nina Simone, Wild nothing'
+
+
+end
+```
+
+## 5. Implement the Route
+
+Write the route and web server code to implement the route behaviour.
+
+<!-- BEGIN GENERATED SECTION DO NOT EDIT -->
+
+---
+
+**How was this resource?**  
+[😫](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications&prefill_File=resources%2Fsinatra_route_design_recipe_template.md&prefill_Sentiment=😫) [😕](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications&prefill_File=resources%2Fsinatra_route_design_recipe_template.md&prefill_Sentiment=😕) [😐](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications&prefill_File=resources%2Fsinatra_route_design_recipe_template.md&prefill_Sentiment=😐) [🙂](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications&prefill_File=resources%2Fsinatra_route_design_recipe_template.md&prefill_Sentiment=🙂) [😀](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Fweb-applications&prefill_File=resources%2Fsinatra_route_design_recipe_template.md&prefill_Sentiment=😀)  
+Click an emoji to tell us.
+
+<!-- END GENERATED SECTION DO NOT EDIT -->
